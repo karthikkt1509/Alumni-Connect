@@ -23,5 +23,3 @@ encourages networking, communication, and knowledge sharing.
 - Media Handling: Django ImageField (Pillow)
 - Tools: Git, GitHub
 
-## Project Structure
-
