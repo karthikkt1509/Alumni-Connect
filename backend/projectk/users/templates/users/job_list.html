@@ -1,0 +1,253 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Listings</title>
+  </head>
+  <body>
+    <h2>Latest Job Postings</h2>
+
+    {% for job in jobs %}
+    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px">
+      <h3>{{ job.title }}</h3>
+      <p><strong>Company:</strong> {{ job.company }}</p>
+      <p><strong>Location:</strong> {{ job.location }}</p>
+      <p>{{ job.description }}</p>
+      <p>
+        <small>Posted by {{ job.user.username }} on {{ job.posted_at }}</small>
+      </p>
+
+      {% if job.apply_link %}
+      <a
+        href="{{ job.apply_link }}"
+        target="_blank"
+        style="
+          background-color: blue;
+          color: white;
+          padding: 5px 10px;
+          text-decoration: none;
+        "
+        >Apply Now</a
+      >
+      {% endif %}
+    </div>
+    {% empty %}
+    <p>No job postings yet.</p>
+    {% endfor %}
+
+    <br />
+    <a href="{% url 'job_posting' %}">Post a Job</a>
+  </body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Listings</title>
+  </head>
+  <body>
+    <h2>Latest Job Postings</h2>
+
+    
+    <form method="GET" action="{% url 'job_list' %}">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search jobs by title, company, or location..."
+        value="{{ query }}"
+        style="padding: 5px; width: 250px"
+      />
+      <button type="submit" style="padding: 5px">Search</button>
+    </form>
+
+    <br />
+
+    {% for job in jobs %}
+    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px">
+      <h3>{{ job.title }}</h3>
+      <p><strong>Company:</strong> {{ job.company }}</p>
+      <p><strong>Location:</strong> {{ job.location }}</p>
+      <p>{{ job.description }}</p>
+      <p>
+        <small>Posted by {{ job.user.username }} on {{ job.posted_at }}</small>
+      </p>
+
+      {% if job.apply_link %}
+      <a
+        href="{{ job.apply_link }}"
+        target="_blank"
+        style="
+          background-color: blue;
+          color: white;
+          padding: 5px 10px;
+          text-decoration: none;
+        "
+        >Apply Now</a
+      >
+      {% endif %}
+    </div>
+    {% empty %}
+    <p>No job postings found.</p>
+    {% endfor %}
+
+    <br />
+    <a href="{% url 'job_posting' %}">Post a Job</a>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Listings</title>
+    <style>
+      body {
+        background: linear-gradient(to right, #e3f2fd, #ffffff);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        padding: 2rem;
+        color: #0d47a1;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+        gap: 0.5rem;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        width: 60%;
+        border: 1px solid #90caf9;
+        border-radius: 6px;
+        background-color: #f1f8ff;
+        outline-color: #1976d2;
+      }
+
+      button {
+        padding: 10px 16px;
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      button:hover {
+        background-color: #0d47a1;
+      }
+
+      .job-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .job-card:hover {
+        transform: scale(1.01);
+      }
+
+      .job-card h3 {
+        margin-bottom: 0.5rem;
+        color: #0d47a1;
+      }
+
+      .job-card p {
+        margin: 4px 0;
+        color: #37474f;
+      }
+
+      .job-card small {
+        display: block;
+        margin-top: 0.5rem;
+        color: #78909c;
+      }
+
+      .apply-btn {
+        display: inline-block;
+        margin-top: 1rem;
+        background-color: #0d47a1;
+        color: white;
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+
+      .apply-btn:hover {
+        background-color: #1565c0;
+      }
+
+      .link {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .link a {
+        color: #0d47a1;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Latest Job Postings</h2>
+
+      <!-- Search Bar -->
+      <form method="GET" action="{% url 'job_list' %}">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search jobs by title, company, or location..."
+          value="{{ query }}"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {% for job in jobs %}
+      <div class="job-card">
+        <h3>{{ job.title }}</h3>
+        <p><strong>Company:</strong> {{ job.company }}</p>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+        <p>{{ job.description }}</p>
+        <small>Posted by {{ job.user.username }} on {{ job.posted_at }}</small>
+
+        {% if job.apply_link %}
+        <a href="{{ job.apply_link }}" class="apply-btn" target="_blank"
+          >Apply Now</a
+        >
+        {% endif %}
+      </div>
+      {% empty %}
+      <p>No job postings found.</p>
+      {% endfor %}
+
+      <div class="link">
+        <a href="{% url 'job_posting' %}">+ Post a New Job</a>
+      </div>
+    </div>
+  </body>
+</html>

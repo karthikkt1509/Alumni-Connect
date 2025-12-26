@@ -1,0 +1,241 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>{{ question.question_text }}</h2>
+    <p><b>Source:</b> {{ question.source }}</p>
+    <p><b>Category:</b> {{ question.category }}</p>
+    <p><b>Tags:</b> {{ question.tags }}</p>
+
+    <h3>Answers (Sorted by Upvotes):</h3>
+    <ul>
+      {% for answer in answers %}
+      <li>
+        <p>{{ answer.answer_text }}</p>
+        <button onclick="upvoteAnswer({{ answer.id }})">Upvote</button>
+        <span id="upvotes-{{ answer.id }}">{{ answer.upvotes }}</span> Upvotes
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h3>Submit Your Answer</h3>
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      function upvoteAnswer(answerId) {
+        fetch(`/answer/upvote/${answerId}/`, {
+          method: "POST",
+          headers: { "X-CSRFToken": "{{ csrf_token }}" },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message === "You have already upvoted this answer.") {
+              alert("You have already upvoted this answer.");
+            } else {
+              document.getElementById(`upvotes-${answerId}`).innerText =
+                data.upvotes;
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ question.question_text }}</title>
+    <style>
+      body {
+            margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #043eff, #432694);
+        color: #333;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 123, 255, 0.1);
+      }
+
+      h2 {
+        color: #0056d2;
+      }
+
+      .meta {
+        margin-bottom: 10px;
+        color: #555;
+      }
+
+      .tag {
+        background: #d6f0ff;
+        color: #007bff;
+        padding: 4px 10px;
+        border-radius: 8px;
+        margin-right: 5px;
+        font-size: 0.85rem;
+      }
+
+      .answers {
+        margin-top: 30px;
+      }
+
+      .answer-card {
+        background: #f4faff;
+        border-left: 4px solid #007bff;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .answer-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0, 123, 255, 0.1);
+      }
+
+      .upvote-btn {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 10px;
+      }
+
+
+  .question-card {
+    background: #ffffff;
+    border-left: 5px solid #007bff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .question-card:hover {
+    transform: scale(1.02);
+  }
+
+  .tag {
+    background-color: #007bff;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 5px;
+    display: inline-block;
+  }
+      .upvote-btn:hover {
+        background: #0056b3;
+      }
+
+      .upvotes-count {
+        display: inline-block;
+        margin-left: 10px;
+        font-weight: bold;
+        color: #007bff;
+      }
+        
+      form textarea,
+      form input,
+      form button {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      form button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      form button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="question-card">
+  <h2>{{ question.question_text }}</h2>
+  <p><b>Source:</b> {{ question.source }}</p>
+  <p><b>Category:</b> {{ question.category }}</p>
+  <p><b>Tags:</b>
+    {{ question.tags}}
+  </p>
+</div>
+
+      <div class="answers">
+        <h3>Answers (Sorted by Upvotes):</h3>
+        {% for answer in answers %}
+        <div class="answer-card">
+          <p>{{ answer.answer_text }}</p>
+          <button class="upvote-btn" onclick="upvoteAnswer({{ answer.id }})">
+            Upvote 👍
+          </button>
+          <span class="upvotes-count" id="upvotes-{{ answer.id }}"
+            >{{ answer.upvotes }}</span
+          >
+          Upvotes
+        </div>
+        {% empty %}
+        <p>No answers yet.</p>
+        {% endfor %}
+      </div>
+
+      <div class="answer-form">
+        <h3>Submit Your Answer</h3>
+        <form method="POST">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit">🚀 Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function upvoteAnswer(answerId) {
+        fetch(`/answer/upvote/${answerId}/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message === "You have already upvoted this answer.") {
+              alert("You have already upvoted this answer.");
+            } else {
+              document.getElementById(`upvotes-${answerId}`).innerText =
+                data.upvotes;
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
+</html>

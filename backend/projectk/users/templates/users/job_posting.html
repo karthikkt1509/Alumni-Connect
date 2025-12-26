@@ -1,0 +1,173 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a Job</title>
+  </head>
+  <body>
+    <form method="post">
+      {% csrf_token %}
+      <label>Job Title:</label>
+      <input type="text" name="title" required /><br />
+
+      <label>Company Name:</label>
+      <input type="text" name="company" required /><br />
+
+      <label>Location:</label>
+      <input type="text" name="location" required /><br />
+
+      <label>Job Description:</label>
+      <textarea name="description" required></textarea><br />
+
+      <label>Apply Link:</label>
+      <input
+        type="url"
+        name="apply_link"
+        placeholder="https://example.com"
+        required
+      /><br />
+
+      <button type="submit">Post Job</button>
+    </form>
+
+    <br />
+    <a href="{% url 'job_list' %}">View All Jobs</a>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post a Job</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(to right, #e3f2fd, #ffffff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+      }
+
+      h2 {
+        text-align: center;
+        color: #0d47a1;
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin: 10px 0 6px;
+        color: #0d47a1;
+        font-weight: 500;
+      }
+
+      input[type="text"],
+      input[type="url"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cfd8dc;
+        border-radius: 6px;
+        background-color: #f1f8ff;
+        outline-color: #1976d2;
+        transition: 0.3s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #1976d2;
+        background-color: #e3f2fd;
+      }
+
+      textarea {
+        resize: vertical;
+        height: 100px;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0d47a1;
+      }
+
+      .link {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .link a {
+        color: #0d47a1;
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s ease;
+      }
+
+      .link a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Post a Job</h2>
+      <form method="post">
+        {% csrf_token %}
+        <label for="title">Job Title:</label>
+        <input type="text" name="title" required />
+
+        <label for="company">Company Name:</label>
+        <input type="text" name="company" required />
+
+        <label for="location">Location:</label>
+        <input type="text" name="location" required />
+
+        <label for="description">Job Description:</label>
+        <textarea name="description" required></textarea>
+
+        <label for="apply_link">Apply Link:</label>
+        <input
+          type="url"
+          name="apply_link"
+          placeholder="https://example.com"
+          required
+        />
+
+        <button type="submit">Post Job</button>
+      </form>
+
+      <div class="link">
+        <a href="{% url 'job_list' %}">View All Jobs</a>
+      </div>
+    </div>
+  </body>
+</html>

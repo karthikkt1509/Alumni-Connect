@@ -1,0 +1,119 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Questions</title>
+  </head>
+  <body>
+    <h2>All Questions</h2>
+
+    <form method="GET" action="{% url 'question_list' %}">
+      <input type="text" name="q" placeholder="Search questions..." value="{{ query }}" />
+
+      <select name="category">
+        <option value="">All Categories</option>
+        <option value="Mathematics" {% if category == "Mathematics" %}selected{% endif %}>Mathematics</option>
+        <option value="Physics" {% if category == "Physics" %}selected{% endif %}>Physics</option>
+        <option value="Chemistry" {% if category == "Chemistry" %}selected{% endif %}>Chemistry</option>
+        <option value="Computer Science" {% if category == "Computer Science" %}selected{% endif %}>Computer Science</option>
+      </select>
+
+      <button type="submit">Search</button>
+    </form>
+
+    <a href="{% url 'ask_question' %}">Ask a new question</a>
+
+    <ul>
+      {% for question in questions %}
+      <li>
+        <a href="{% url 'question_detail' question.pk %}">{{ question.question_text }}</a>
+        <small>Category: {{ question.category }} | Tags: {{ question.tags }}</small>
+      </li>
+      {% empty %}
+      <li>No questions found.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+    -->
+
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: linear-gradient(to right, #0f172a, #1e293b);
+      }
+      ::placeholder {
+        color: #94a3b8;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-white font-sans p-6">
+    <div class="max-w-4xl mx-auto space-y-6">
+      <div class="text-center">
+        <h2 class="text-4xl font-bold text-blue-400 tracking-wide">📘 All Questions</h2>
+      </div>
+
+      <!-- Search and Filter -->
+      <form method="GET" action="{% url 'question_list' %}" class="flex flex-col md:flex-row items-center justify-between bg-white bg-opacity-5 p-4 rounded-xl backdrop-blur-md shadow-md space-y-4 md:space-y-0 md:space-x-4">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search questions..."
+          value="{{ query }}"
+          class="flex-1 bg-gray-900 text-white p-2 px-4 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <select
+          name="category"
+          class="bg-gray-900 text-white p-2 px-4 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">All Categories</option>
+          <option value="Mathematics" {% if category == "Mathematics" %}selected{% endif %}>Mathematics</option>
+          <option value="Physics" {% if category == "Physics" %}selected{% endif %}>Physics</option>
+          <option value="Chemistry" {% if category == "Chemistry" %}selected{% endif %}>Chemistry</option>
+          <option value="Computer Science" {% if category == "Computer Science" %}selected{% endif %}>Computer Science</option>
+        </select>
+
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-700 transition duration-300 px-6 py-2 rounded-lg font-semibold shadow"
+        >
+          🔍 Search
+        </button>
+      </form>
+
+      <div class="text-right">
+        <a
+          href="{% url 'ask_question' %}"
+          class="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-indigo-600 hover:to-purple-600 px-5 py-2 rounded-lg font-bold shadow-md transition"
+        >
+          ➕ Ask a New Question
+        </a>
+      </div>
+
+      <!-- Questions List -->
+      <ul class="space-y-4">
+        {% for question in questions %}
+        <li class="bg-gray-800 bg-opacity-60 hover:bg-opacity-90 transition p-5 rounded-xl shadow-lg hover:scale-[1.01] transform duration-200">
+          <a href="{% url 'question_detail' question.pk %}" class="text-xl font-semibold text-blue-300 hover:underline">
+            {{ question.question_text }}
+          </a>
+          <p class="text-sm text-blue-100 mt-1">
+            📂 Category: <span class="text-blue-400">{{ question.category }}</span> |
+            🏷 Tags: <span class="text-blue-200">{{ question.tags }}</span>
+          </p>
+        </li>
+        {% empty %}
+        <li class="text-center text-gray-400 italic">No questions found.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chat with {{ user.username }}</title>
+      </head>
+      <body>
+        <h2>Chat with {{ user.username }}</h2>
+
+        <div>
+          {% for message in messages %}
+          <p>
+            <strong>{{ message.user.username }}:</strong> {{ message.text }}
+            <small>{{ message.timestamp }}</small>
+          </p>
+          {% empty %}
+          <p>No messages yet.</p>
+          {% endfor %}
+        </div>
+
+        <h3>Send a Message</h3>
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit">Send</button>
+        </form>
+
+        <a href="{% url 'user_detail' user.id %}">Back to Profile</a>
+      </body>
+    </html>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat with {{ user.username }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: linear-gradient(to right, #0f172a, #1e293b);
+      }
+    </style>
+  </head>
+  <body
+    class="text-white min-h-screen flex flex-col items-center justify-center py-10 px-4 font-sans"
+  >
+    <div
+      class="w-full max-w-2xl bg-white bg-opacity-5 backdrop-blur-lg p-6 rounded-2xl shadow-xl"
+    >
+      <h2 class="text-2xl font-bold text-blue-400 text-center mb-4">
+        💬 Chat with {{ user.username }}
+      </h2>
+
+      <!-- Chat Messages -->
+      <div class="space-y-3 mb-6 max-h-96 overflow-y-auto scrollbar-thin pr-2">
+        {% for message in messages %}
+        <div
+          class="{% if message.user == request.user %}text-right{% else %}text-left{% endif %}"
+        >
+          <div
+            class="inline-block px-4 py-2 rounded-xl shadow-md {% if message.user == request.user %} bg-blue-500 text-white {% else %} bg-gray-200 text-black {% endif %}"
+          >
+            <p class="font-semibold text-sm">{{ message.user.username }}</p>
+            <p class="text-md">{{ message.text }}</p>
+            <p class="text-xs text-gray-200 mt-1">{{ message.timestamp }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-gray-400">No messages yet.</p>
+        {% endfor %}
+      </div>
+
+      <!-- Message Form -->
+      <form method="POST" class="flex items-center space-x-2">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="text"
+          placeholder="Type your message..."
+          class="flex-1 px-4 py-2 rounded-lg bg-white text-black focus:outline-none"
+          required
+        />
+        <button
+          type="submit"
+          class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg shadow-lg transition"
+        >
+          🚀 Send
+        </button>
+      </form>
+
+      <div class="mt-4 text-center">
+        <a
+          href="{% url 'user_detail' user.id %}"
+          class="text-blue-400 hover:underline transition"
+        >
+          🔙 Back to Profile
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

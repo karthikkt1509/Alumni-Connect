@@ -1,0 +1,120 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      {% for user in users %}
+      <li><a href="{% url 'user_detail' user.id %}">{{ user.username }}</a></li>
+      {% endfor %}
+    </ul>
+  </body>
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+  </head>
+  <body>
+    <h2>All Users</h2>
+
+    <form method="GET" action="{% url 'user_list' %}">
+      <input type="text" name="q" placeholder="Search users...." value="{{ query }}" />
+      
+      <select name="category">
+        <option value="">All Branches</option>
+        <option value="CSE" {% if category == "CSE" %}selected{% endif %}>CSE</option>
+        <option value="ECE" {% if category == "ECE" %}selected{% endif %}>ECE</option>
+        <option value="EEE" {% if category == "EEE" %}selected{% endif %}>EEE</option>
+        <option value="MECH" {% if category == "MECH" %}selected{% endif %}>Mechanical</option>
+      </select>
+
+      <button type="submit">Search</button>
+    </form>
+
+    <ul>
+      {% for user in users %}
+      <li>
+        <a href="{% url 'user_detail' user.id %}">{{ user.username }}</a>
+        <small> | Bio: {{ user.bio }} | Location: {{ user.location }} | Skills: {{ user.skills }}</small>
+      </li>
+      {% empty %}
+      <li>No users found.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List | My Django App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-white font-sans p-6">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-10 drop-shadow-lg">🌐 All Users</h2>
+
+      <!-- Search & Filter Form -->
+      <form method="GET" action="{% url 'user_list' %}" class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-6 shadow-xl mb-10 flex flex-col md:flex-row md:items-center gap-4 justify-between">
+        <input
+          type="text"
+          name="q"
+          placeholder="🔍 Search users..."
+          value="{{ query }}"
+          class="w-full md:w-1/2 px-4 py-2 rounded-md bg-blue-900 bg-opacity-30 border border-blue-300 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white transition"
+        />
+        
+        <select
+          name="category"
+          class="px-4 py-2 rounded-md bg-blue-900 bg-opacity-30 border border-blue-300 text-white focus:outline-none focus:ring-2 focus:ring-white"
+        >
+          <option value="">All Branches</option>
+          <option value="CSE" {% if category == "CSE" %}selected{% endif %}>CSE</option>
+          <option value="ECE" {% if category == "ECE" %}selected{% endif %}>ECE</option>
+          <option value="EEE" {% if category == "EEE" %}selected{% endif %}>EEE</option>
+          <option value="MECH" {% if category == "MECH" %}selected{% endif %}>Mechanical</option>
+        </select>
+
+        <button
+          type="submit"
+          class="bg-white text-blue-900 font-bold px-6 py-2 rounded-md hover:bg-gray-100 transition duration-300"
+        >
+          Search
+        </button>
+      </form>
+
+      <!-- User Cards -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for user in users %}
+        <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-xl p-6 transition transform hover:scale-105 hover:shadow-2xl duration-300">
+          <h3 class="text-xl font-semibold text-white mb-2">{{ user.username }}</h3>
+          <p class="text-sm"><span class="font-semibold text-blue-200">Bio:</span> {{ user.bio }}</p>
+          <p class="text-sm"><span class="font-semibold text-blue-200">Location:</span> {{ user.location }}</p>
+          <p class="text-sm"><span class="font-semibold text-blue-200">Skills:</span> {{ user.skills }}</p>
+          <a
+            href="{% url 'user_detail' user.id %}"
+            class="inline-block mt-4 text-sm font-medium bg-white text-blue-900 px-4 py-1 rounded hover:bg-gray-200 transition"
+          >
+            View Profile →
+          </a>
+        </div>
+        {% empty %}
+        <p class="col-span-full text-center text-lg mt-10 text-white">No users found.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
